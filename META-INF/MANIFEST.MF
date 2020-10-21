@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Teste Unitario
+Bundle-SymbolicName: testeUnitario;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: activator.Activator
+Bundle-Vendor: Unipar
+Require-Bundle: org.eclipse.ui,
+  org.eclipse.core.runtime,
+  org.eclipse.equinox.ds,
+  org.eclipse.equinox.util,
+  org.eclipse.equinox.event
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: testeUnitario
+Bundle-ActivationPolicy: lazy
