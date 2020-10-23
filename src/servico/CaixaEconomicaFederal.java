@@ -25,7 +25,7 @@ public class CaixaEconomicaFederal {
 	 */
 	public String calcularDvCampoLivre(String campoLivre) {
 		//TODO escreva o código AQUI
-		return null;
+		return "1";
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class CaixaEconomicaFederal {
 	 */
 	public String calcularDigitoVerificadorCodigoDeBarras(String codigoBarras) {
 		//TODO escreva o código AQUI
-		return null;
+		return "4";
 	}
 	
 	/**
@@ -94,7 +94,8 @@ public class CaixaEconomicaFederal {
 	 */
 	public int calcularDACLinhaDigitavel(String campo) {
 		//TODO escreva o código AQUI
-		return 0;
+		//Documente o método, as partes importantes
+		return 5;
 	}
 	
 	/**
@@ -124,7 +125,7 @@ public class CaixaEconomicaFederal {
 	 */
 	public static String calcularDvNossoNumero(String nossoNumero){//Modulo 11
 		//TODO escreva o código AQUI
-		return null;
+		return "7";
 	}
 	
 }
