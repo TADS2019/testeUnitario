@@ -8,7 +8,7 @@ import org.junit.Test;
 import servico.CaixaEconomicaFederal;
 
 /**
- * A classe para testar o cálculo do dígito verificador do código de barras da Caixa Econômica Federal
+ * A classe para testar o cï¿½lculo do dï¿½gito verificador do cï¿½digo de barras da Caixa Econï¿½mica Federal
  * 
  * @author Filipe Wutzke
  */
@@ -24,9 +24,9 @@ public class CaixaEconomicaFederalTest {
 	}
 	
 	/**
-	 * Testa o calcula do dígito verificador do código de barras
-	 * <ul><b>Dados usados para cálculo:</b>
-	 * <li>Código de barras sem dv: 1049324200000321120055077222133347777777771</li>
+	 * Testa o calcula do dï¿½gito verificador do cï¿½digo de barras
+	 * <ul><b>Dados usados para cï¿½lculo:</b>
+	 * <li>Cï¿½digo de barras sem dv: 1049324200000321120055077222133347777777771</li>
 	 * </ul>
 	 * @author Filipe Wutzke
 	 */
@@ -36,15 +36,15 @@ public class CaixaEconomicaFederalTest {
 		digitoCalculado = caixaEconomicaFederal.calcularDigitoVerificadorCodigoDeBarras("1049324200000321120055077222133347777777771");
 		digitoEsperado = "4";
 		
-		assertEquals(String.format("O dígito [%s] retornado é diferente do dígito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
+		assertEquals(String.format("O dï¿½gito [%s] retornado ï¿½ diferente do dï¿½gito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
 				digitoEsperado);
 	}
 	
 	/**
-	 * Testa o calculo do dígito verificador do campo livre do código de barras</br>
-	 * <ul><b>Dados usados para cálculo:</b>
-	 * <li>Código do Beneficiário - DV: 005507 - 7</li>
-	 * <li>Nosso Número (sem DV): 14/222333777777777</li>
+	 * Testa o calculo do dï¿½gito verificador do campo livre do cï¿½digo de barras</br>
+	 * <ul><b>Dados usados para cï¿½lculo:</b>
+	 * <li>Cï¿½digo do Beneficiï¿½rio - DV: 005507 - 7</li>
+	 * <li>Nosso Nï¿½mero (sem DV): 14/222333777777777</li>
 	 * </ul>
 	 * @author Filipe Wutzke
 	 */
@@ -54,14 +54,14 @@ public class CaixaEconomicaFederalTest {
 		digitoCalculado = caixaEconomicaFederal.calcularDvCampoLivre("005507722213334777777777");
 		digitoEsperado = "1";
 		
-		assertEquals(String.format("O dígito [%s] retornado é diferente do dígito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
+		assertEquals(String.format("O dï¿½gito [%s] retornado ï¿½ diferente do dï¿½gito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
 				digitoEsperado);
 	}
 	
 	/**
-	 * Testa o calculo do dígito verificador do nosso número</br>
-	 * <ul><b>Dados usados para cálculo:</b>
-	 * <li>Nosso Número usado para cálculo: 14/000000000000019</li>
+	 * Testa o calculo do dï¿½gito verificador do nosso nï¿½mero</br>
+	 * <ul><b>Dados usados para cï¿½lculo:</b>
+	 * <li>Nosso Nï¿½mero usado para cï¿½lculo: 14/000000000000019</li>
 	 * </ul>
 	 * @author Filipe Wutzke
 	 */
@@ -71,13 +71,13 @@ public class CaixaEconomicaFederalTest {
 		digitoCalculado = CaixaEconomicaFederal.calcularDvNossoNumero("14000000000000019");
 		digitoEsperado = "7";
 		
-		assertEquals(String.format("O dígito [%s] retornado é diferente do dígito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
+		assertEquals(String.format("O dï¿½gito [%s] retornado ï¿½ diferente do dï¿½gito esperado [%s]", digitoCalculado, digitoEsperado), digitoCalculado,
 				digitoEsperado);
 	}
 	
 	/**
-	 * Teste do DAC (Dígito de Auto Conferência) do primeiro campo da linha digitável.
-	 * <ul><b>Dados usados para cálculo:</b>
+	 * Teste do DAC (Dï¿½gito de Auto Conferï¿½ncia) do primeiro campo da linha digitï¿½vel.
+	 * <ul><b>Dados usados para cï¿½lculo:</b>
 	 * <li>Campo 1: 104900550</li>
 	 * </ul>
 	 * @author Filipe Wutzke
@@ -88,7 +88,7 @@ public class CaixaEconomicaFederalTest {
 		int dacCalculado = caixaEconomicaFederal.calcularDACLinhaDigitavel("104900550");
 		int dacEsperado = 5;
 		
-		assertEquals(String.format("O DAC [%s] do primeiro campo retornado é diferente do DAC esperado [%s]", dacCalculado, dacEsperado), dacCalculado,
+		assertEquals(String.format("O DAC [%s] do primeiro campo retornado ï¿½ diferente do DAC esperado [%s]", dacCalculado, dacEsperado), dacCalculado,
 				dacEsperado);
 	}
 	

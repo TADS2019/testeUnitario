@@ -1,130 +1,381 @@
 package servico;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CaixaEconomicaFederal {
 	
 	/**
-	 * CÁLCULO DO DIGITO VERIFICADOR DO CAMPO LIVRE
+	 * Cï¿½LCULO DO DIGITO VERIFICADOR DO CAMPO LIVRE
 	 * <p>
-	 * <ul><b>1º PASSO</b>
-	 * <li>Aplicar o módulo 11, o primeiro dígito da direita para a esquerda será multiplicado por 2, o segundo, por 3 e assim sucessivamente até o 9;</li>
+	 * <ul><b>1ï¿½ PASSO</b>
+	 * <li>Aplicar o mï¿½dulo 11, o primeiro dï¿½gito da direita para a esquerda serï¿½ multiplicado por 2, o segundo, por 3 e assim sucessivamente atï¿½ o 9;</li>
 	 * </ul>
-	 * <ul><b>2º PASSO</b>
-	 * <li>Somar o resultado da multiplicação. Obs: Quando o Total da Soma for MENOR que o quociente (no caso 11), pular o 3º PASSO, ou seja, 
-	 * o Total da Soma deverá ser diminuído diretamente do quociente, obtendo-se o DV como resultado.</li>
+	 * <ul><b>2ï¿½ PASSO</b>
+	 * <li>Somar o resultado da multiplicaï¿½ï¿½o. Obs: Quando o Total da Soma for MENOR que o quociente (no caso 11), pular o 3ï¿½ PASSO, ou seja, 
+	 * o Total da Soma deverï¿½ ser diminuï¿½do diretamente do quociente, obtendo-se o DV como resultado.</li>
 	 * </ul>
-	 * <ul><b>3º PASSO</b>
+	 * <ul><b>3ï¿½ PASSO</b>
 	 * <li>Dividir o Total da Soma por 11</li>
 	 * </ul>
-	 * <ul><b>4º PASSO</b>
-	 * <li>Subtrair o resto da divisão de 11. Se o RESULTADO for maior que 9 (nove) o DV será 0 (zero)*, caso contrário o RESULTADO será o DV.</li>
+	 * <ul><b>4ï¿½ PASSO</b>
+	 * <li>Subtrair o resto da divisï¿½o de 11. Se o RESULTADO for maior que 9 (nove) o DV serï¿½ 0 (zero)*, caso contrï¿½rio o RESULTADO serï¿½ o DV.</li>
 	 * </ul>
 	 *
 	 * @param campoLivre o campo livre a ser calculado o dv
-	 * @return a string com o dígito verificador do campo livre
+	 * @return a string com o dï¿½gito verificador do campo livre
 	 * @author Filipe Wutzke
 	 */
 	public String calcularDvCampoLivre(String campoLivre) {
-		//TODO escreva o código AQUI
-		return null;
+		Integer numero = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		int j = 0;
+		int m = 24;
+		int pesso1 = 1;
+		int pesso2 = 1;
+		int pesso3 = 1;
+		int total = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int totalModuloDivisao = 0;
+		int retorno = 0;
+		
+		for(int i = 0; i < campoLivre.length(); i++) {
+			j = j + 1;
+			numero = Integer.parseInt(campoLivre.substring(i,j));
+			codigoBarrasTemp.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			numero = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;
+			if(m >= 0 && m <=8 ) {		
+				pesso1 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso1;
+			}
+			if(m  >= 8 && m <= 16 ) {
+				pesso2 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso2;
+			}
+			if(m >= 16) {
+				pesso3 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso3;
+			}
+			
+			totalSoma += total;
+			numero = null;
+			total = 0;
+			totalTemp = 0;
+		}
+
+		totalModuloDivisao = totalSoma % 11;
+		retorno = 11 - totalModuloDivisao;
+		totalSoma = 0;
+
+		return String.valueOf(retorno);
+
 	}
 	
 	/**
-	 * Calcula o digito verificador do código de barras.
+	 * Calcula o digito verificador do cï¿½digo de barras.
 	 * <p>
-	 * O DV GERAL do Código de Barras, localizado na posição 5, é calculado através do MÓDULO 11, com peso de 2 a 9; 
-	 * Considerar as posições de 1 a 4 e de 6 a 44, iniciando pela posição 44 e saltando a posição 5.</br>
-	 * Para o cálculo do dígito verificado do código de barras, procede a seguinte forma:
-	 * <ul><b>1º PASSO</b>
-	 * <li>Aplicar o módulo 11, com peso de 2 a 9. O primeiro dígito da direita para a esquerda será multiplicado por 2, 
-	 * o segundo por 3 e assim sucessivamente até o 9</li>
+	 * O DV GERAL do Cï¿½digo de Barras, localizado na posiï¿½ï¿½o 5, ï¿½ calculado atravï¿½s do Mï¿½DULO 11, com peso de 2 a 9; 
+	 * Considerar as posiï¿½ï¿½es de 1 a 4 e de 6 a 44, iniciando pela posiï¿½ï¿½o 44 e saltando a posiï¿½ï¿½o 5.</br>
+	 * Para o cï¿½lculo do dï¿½gito verificado do cï¿½digo de barras, procede a seguinte forma:
+	 * <ul><b>1ï¿½ PASSO</b>
+	 * <li>Aplicar o mï¿½dulo 11, com peso de 2 a 9. O primeiro dï¿½gito da direita para a esquerda serï¿½ multiplicado por 2, 
+	 * o segundo por 3 e assim sucessivamente atï¿½ o 9</li>
 	 * </ul>
-	 * <ul><b>2º PASSO</b>
-	 * <li>Somar o resultado da multiplicação</li>
+	 * <ul><b>2ï¿½ PASSO</b>
+	 * <li>Somar o resultado da multiplicaï¿½ï¿½o</li>
 	 * </ul>
-	 * <ul><b>3º PASSO</b>
+	 * <ul><b>3ï¿½ PASSO</b>
 	 * <li>Dividir o Total da Soma por 11</li>
 	 * </ul>
-	 * <ul><b>4º PASSO</b>
-	 * <li>O Resto da divisão deve ser subtraído de 11. O RESULTADO deve ser incluído na 5ª posição do Código de Barras</li>
+	 * <ul><b>4ï¿½ PASSO</b>
+	 * <li>O Resto da divisï¿½o deve ser subtraï¿½do de 11. O RESULTADO deve ser incluï¿½do na 5ï¿½ posiï¿½ï¿½o do Cï¿½digo de Barras</li>
 	 * </ul>
-	 * <b>ATENÇÃO:</b> Em nenhuma hipótese poderá ser utilizado o dígito igual a 0 (zero) como DV Geral.
-	 * Se o RESULTADO for igual 0 (zero) ou maior que 9 (nove) o DV será 1 (um).
-	 * Regra exclusiva para cálculo do DV geral do código de barras que não admite 0 (zero).
+	 * <b>ATENï¿½ï¿½O:</b> Em nenhuma hipï¿½tese poderï¿½ ser utilizado o dï¿½gito igual a 0 (zero) como DV Geral.
+	 * Se o RESULTADO for igual 0 (zero) ou maior que 9 (nove) o DV serï¿½ 1 (um).
+	 * Regra exclusiva para cï¿½lculo do DV geral do cï¿½digo de barras que nï¿½o admite 0 (zero).
 	 *
-	 * @param codigoBarras o código de barras
-	 * @return o código de barrar acrescido do digito verificador na posição correta
+	 * @param codigoBarras o cï¿½digo de barras
+	 * @return o cï¿½digo de barrar acrescido do digito verificador na posiï¿½ï¿½o correta
 	 * 
 	 * @author Filipe Wutzke
 	 */
 	public String calcularDigitoVerificadorCodigoDeBarras(String codigoBarras) {
-		//TODO escreva o código AQUI
-		return null;
+		
+		Integer numero = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		int j = 0;
+		int m = 43;
+		int pesso1 = 1;
+		int pesso2 = 1;
+		int pesso3 = 1;
+		int pesso4 = 1;
+		int pesso5 = 1;
+		int pesso6 = 1;
+		int total = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int totalModuloDivisao = 0;
+		int retorno = 0;
+		
+		for(int i = 0; i < codigoBarras.length(); i++) {
+			j = j + 1;
+			numero = Integer.parseInt(codigoBarras.substring(i,j));
+			codigoBarrasTemp.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			numero = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;
+			if(m >= 0 && m <=8 ) {		
+				pesso1 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso1;
+			}
+			if(m  >= 8 && m <= 16 ) {
+				pesso2 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso2;
+			}
+			if(m >= 16 && m <= 24 ) {
+				pesso3 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso3;
+			}
+			if(m >= 24 && m <= 32 ) {
+				pesso4 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso4;
+			}
+			if(m >= 32 && m <= 40) {
+				pesso5 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso5;
+			}
+			if(m >= 40) {
+				pesso6 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso6;
+			}
+			
+			totalSoma += total;
+			numero = null;
+			total = 0;
+			totalTemp = 0;
+		}
+		
+		 totalModuloDivisao = totalSoma % 11;
+		 retorno = 11 - totalModuloDivisao;
+		 
+		totalSoma = 0;
+		
+ 		return  String.valueOf(retorno);
 	}
 	
 	/**
-	 * Calcula o digito verificador dos campos da linha digitável
+	 * Calcula o digito verificador dos campos da linha digitï¿½vel
 	 * 
 	 * @param campo sequencia numerica a ser calculada o Digito verificador
 	 * @return String com campo + DV
 	 */
 	public String calcularDvCampos(String campo){//Modulo 10
-		//Pega o codigo de barras, e já coloca o digito verificador (soma) no codigo de barras
+
 		return campo + calcularDACLinhaDigitavel(campo);
+
 	}
 	
 	/**
-	 * Calcula o digito verificador ou dígito de auto conferência (DAC) da linha digitável
+	 * Calcula o digito verificador ou dï¿½gito de auto conferï¿½ncia (DAC) da linha digitï¿½vel
 	 * <p>
-	 * Para o cálculo do dígito verificado do código de barras, procede a seguinte forma:
+	 * Para o cï¿½lculo do dï¿½gito verificado do cï¿½digo de barras, procede a seguinte forma:
 	 * <ul>
-	 * <li>O cálculo é através do módulo 10, com base de cálculo igual a 2</li>
-	 * <li>O primeiro dígito da esquerda para direita será multiplicado por 2, o segundo por 1, o terceiro por 2 e assim sucessivamente.</li>
-	 * <li>Os resultados das multiplicações devem ser acumulados.</li>
-	 * <li>No final, o valor acumulado deverá ser dividido por 10.</li>
-	 * <li>O resto da divisão deverá ser subtraído de 10.<ul>
-	 * <li>Se o resultado da subtração for igual a 10 (dez) devera assumir o dígito igual a 0 (zero).</li> 
-	 * <li>Caso contrário, o resultado da subtração será o próprio dígito.</li>
+	 * <li>O cï¿½lculo ï¿½ atravï¿½s do mï¿½dulo 10, com base de cï¿½lculo igual a 2</li>
+	 * <li>O primeiro dï¿½gito da esquerda para direita serï¿½ multiplicado por 2, o segundo por 1, o terceiro por 2 e assim sucessivamente.</li>
+	 * <li>Os resultados das multiplicaï¿½ï¿½es devem ser acumulados.</li>
+	 * <li>No final, o valor acumulado deverï¿½ ser dividido por 10.</li>
+	 * <li>O resto da divisï¿½o deverï¿½ ser subtraï¿½do de 10.<ul>
+	 * <li>Se o resultado da subtraï¿½ï¿½o for igual a 10 (dez) devera assumir o dï¿½gito igual a 0 (zero).</li> 
+	 * <li>Caso contrï¿½rio, o resultado da subtraï¿½ï¿½o serï¿½ o prï¿½prio dï¿½gito.</li>
 	 * </ul></li> 
 	 * </ul>
 	 *
-	 * @param campo o campo da linha digitável que deverá ser calculado para encontrar o DAC
+	 * @param campo o campo da linha digitï¿½vel que deverï¿½ ser calculado para encontrar o DAC
 	 * @return o DAC calculado sobre o campo informado
 	 * 
 	 * @author Filipe Wutzke
 	 */
 	public int calcularDACLinhaDigitavel(String campo) {
-		//TODO escreva o código AQUI
-		return 0;
+		
+		Integer numero = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		List<Integer> multiplicacao = new ArrayList<Integer>();
+		int j = 0;
+		int m = 9;
+		int pesso = 1;
+		int total = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int totalModuloDivisao = 0;
+		int retorno = 0;
+		
+		for(int i = 0; i < campo.length(); i++) {
+			j = j + 1;
+			numero = Integer.parseInt(campo.substring(i,j));
+			codigoBarrasTemp.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			numero = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;		
+			pesso += 1;
+			
+			totalTemp = codigoBarrasTempModulo11.get(m);
+			total = totalTemp * pesso;
+
+			if(total >= 10) {
+				String tempTotal = String.valueOf(total);
+				String tempPrimeiroNumero = tempTotal.substring(0,1);
+				String tempSegundoNumero = tempTotal.substring(1,2);
+				int tempPrimNumInt = Integer.parseInt(tempPrimeiroNumero);
+				int tempSegNumInt = Integer.parseInt(tempSegundoNumero);
+				int tempFinalTotal = tempPrimNumInt + tempSegNumInt;
+				total = tempFinalTotal;
+				
+			}
+			multiplicacao.add(total);
+			totalSoma += total;
+			
+			if(pesso == 2){
+				pesso = 0;
+			}
+			
+			numero = null;
+			total = 0;
+			totalTemp = 0;
+		}
+		
+		totalModuloDivisao = totalSoma % 10;
+		retorno = 10 - totalModuloDivisao;
+		totalSoma = 0;
+		
+ 		return  retorno;
 	}
 	
 	/**
-	 * Calcula o dígito de auto-conferência do nosso número.
+	 * Calcula o dï¿½gito de auto-conferï¿½ncia do nosso nï¿½mero.
 	 * <p>
-	 * O DV do Nosso Número é calculado através do MÓDULO 11, com peso de 2 a 9;
-	 * Para cálculo do DV do Nosso Número são consideradas as 17 posições.</br>
-	 * Para o cálculo do dígito de auto-conferência, procede a seguinte forma:
-	 * <ul><b>1º PASSO</b>
-	 * <li>Aplicar o módulo 11, com peso de 2 a 9. O primeiro dígito da direita para a esquerda será multiplicado por 2, 
-	 * o segundo por 3 e assim sucessivamente até o 9</li>
+	 * O DV do Nosso Nï¿½mero ï¿½ calculado atravï¿½s do Mï¿½DULO 11, com peso de 2 a 9;
+	 * Para cï¿½lculo do DV do Nosso Nï¿½mero sï¿½o consideradas as 17 posiï¿½ï¿½es.</br>
+	 * Para o cï¿½lculo do dï¿½gito de auto-conferï¿½ncia, procede a seguinte forma:
+	 * <ul><b>1ï¿½ PASSO</b>
+	 * <li>Aplicar o mï¿½dulo 11, com peso de 2 a 9. O primeiro dï¿½gito da direita para a esquerda serï¿½ multiplicado por 2, 
+	 * o segundo por 3 e assim sucessivamente atï¿½ o 9</li>
 	 * </ul>
-	 * <ul><b>2º PASSO</b>
-	 * <li>Somar o resultado da multiplicação</li>
+	 * <ul><b>2ï¿½ PASSO</b>
+	 * <li>Somar o resultado da multiplicaï¿½ï¿½o</li>
 	 * </ul>
-	 * <ul><b>3º PASSO</b>
+	 * <ul><b>3ï¿½ PASSO</b>
 	 * <li>Dividir o Total da Soma por 11</li>
 	 * </ul>
-	 * <ul><b>4º PASSO</b>
-	 * <li>O Resto da divisão deve ser subtraído de 11. Se o RESULTADO for maior que 9 (nove) o DV será 0 (zero), caso contrário o RESULTADO será o DV</li>
+	 * <ul><b>4ï¿½ PASSO</b>
+	 * <li>O Resto da divisï¿½o deve ser subtraï¿½do de 11. Se o RESULTADO for maior que 9 (nove) o DV serï¿½ 0 (zero), caso contrï¿½rio o RESULTADO serï¿½ o DV</li>
 	 * </ul>
 	 *
-	 * @param nossoNumero o número nosso numero, com 17 números, sem formatação
-	 * @return o nosso número com o dígito calculado
+	 * @param nossoNumero o nï¿½mero nosso numero, com 17 nï¿½meros, sem formataï¿½ï¿½o
+	 * @return o nosso nï¿½mero com o dï¿½gito calculado
 	 * 
 	 * @author Filipe Wutzke
 	 */
 	public static String calcularDvNossoNumero(String nossoNumero){//Modulo 11
-		//TODO escreva o código AQUI
-		return null;
+		
+		Integer numero = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		int j = 0;
+		int m = 17;
+		int pesso1 = 1;
+		int pesso2 = 1;
+		int pesso3 = 1;
+		int total = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int totalModuloDivisao = 0;
+		int retorno = 0;
+		
+		for(int i = 0; i < nossoNumero.length(); i++) {
+			j = j + 1;
+			numero = Integer.parseInt(nossoNumero.substring(i,j));
+			codigoBarrasTemp.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			numero = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(numero);
+			numero = null;
+		}
+		
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;
+			if(m >= 0 && m <=8 ) {		
+				pesso1 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso1;
+			}
+			if(m  >= 8 && m <= 16 ) {
+				pesso2 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso2;
+			}
+			if(m >= 16) {
+				pesso3 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso3;
+			}
+			
+			totalSoma += total;
+			numero = null;
+			total = 0;
+			totalTemp = 0;
+		}
+
+		totalModuloDivisao = totalSoma % 11;
+		retorno = 11 - totalModuloDivisao;
+		totalSoma = 0;
+
+		return String.valueOf(retorno);
 	}
 	
 }
