@@ -1,4 +1,6 @@
 package servico;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CaixaEconomicaFederal {
 	
@@ -23,9 +25,65 @@ public class CaixaEconomicaFederal {
 	 * @return a string com o dígito verificador do campo livre
 	 * @author Filipe Wutzke
 	 */
+	
 	public String calcularDvCampoLivre(String campoLivre) {
-		//TODO escreva o código AQUI
-		return null;
+		Integer number = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo = new ArrayList<Integer>();
+		int j = 0;
+		int m = 24;
+		int pesso1 = 1;
+		int pesso2 = 1;
+		int pesso3 = 1;
+		int total = 0;
+		int totalModuloDivisao = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int retorno = 0;
+
+		for(int i = 0; i < campoLivre.length(); i++) {
+			j = j + 1;
+			number = Integer.parseInt(campoLivre.substring(i,j));
+			codigoBarrasTemp.add(number);
+			number = null;
+		}
+
+		for(int i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			number = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo.add(number);
+			number = null;
+		}
+
+		for(int i = 0; i < codigoBarrasTempModulo.size(); i++){
+			m = i;
+			if(m >= 0 && m <= 8) {		
+				pesso1 += 1;
+				totalTemp = codigoBarrasTempModulo.get(m);
+				total = totalTemp * pesso1;
+			}
+			if(m  >= 8 && m <= 16) {
+				pesso2 += 1;
+				totalTemp = codigoBarrasTempModulo.get(m);
+				total = totalTemp * pesso2;
+			}
+			if(m >= 16) {
+				pesso3 += 1;
+				totalTemp = codigoBarrasTempModulo.get(m);
+				total = totalTemp * pesso3;
+			}
+
+			totalSoma += total;
+			number = null;
+			total = 0;
+			totalTemp = 0;
+		}
+
+		totalModuloDivisao = totalSoma % 11;
+		retorno = 11 - totalModuloDivisao;
+		totalSoma = 0;
+
+		return String.valueOf(retorno);
 	}
 	
 	/**
@@ -57,9 +115,84 @@ public class CaixaEconomicaFederal {
 	 * @author Filipe Wutzke
 	 */
 	public String calcularDigitoVerificadorCodigoDeBarras(String codigoBarras) {
-		//TODO escreva o código AQUI
-		return null;
-	}
+			Integer number = null;
+			List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+			List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+			int j = 0;
+			int m = 43;
+			int pesso1 = 1;
+			int pesso2 = 1;
+			int pesso3 = 1;
+			int pesso4 = 1;
+			int pesso5 = 1;
+			int pesso6 = 1;
+			int total = 0;
+			int totalModuloDivisao = 0;
+			int totalTemp = 0;
+			int totalSoma = 0;
+			int retorno = 0;
+
+			for(int i = 0; i < codigoBarras.length(); i++) {
+				j = j + 1;
+				number = Integer.parseInt(codigoBarras.substring(i,j));
+				codigoBarrasTemp.add(number);
+				number = null;
+			}
+
+			for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+				m =  m - 1;
+				number = codigoBarrasTemp.get(m);
+				codigoBarrasTempModulo11.add(number);
+				number = null;
+			}
+
+			for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+				m = i;
+				if (m >= 0 && m <=8 ) {		
+					pesso1 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso1;
+				}
+				if (m  >= 8 && m <= 16 ) {
+					pesso2 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso2;
+				}
+				if (m >= 16 && m <= 24 ) {
+					pesso3 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso3;
+				}
+				if (m >= 24 && m <= 32 ) {
+					pesso4 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso4;
+				}
+				if (m >= 32 && m <= 40) {
+					pesso5 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso5;
+				}
+				if (m >= 40) {
+					pesso6 += 1;
+					totalTemp = codigoBarrasTempModulo11.get(m);
+					total = totalTemp * pesso6;
+				}
+
+				totalSoma += total;
+				number = null;
+				total = 0;
+				totalTemp = 0;
+			}
+
+			 totalModuloDivisao = totalSoma % 11;
+			 retorno = 11 - totalModuloDivisao;
+
+			totalSoma = 0;
+
+	 		return  String.valueOf(retorno);
+		}
+
 	
 	/**
 	 * Calcula o digito verificador dos campos da linha digitável
@@ -68,7 +201,6 @@ public class CaixaEconomicaFederal {
 	 * @return String com campo + DV
 	 */
 	public String calcularDvCampos(String campo){//Modulo 10
-		//Pega o codigo de barras, e já coloca o digito verificador (soma) no codigo de barras
 		return campo + calcularDACLinhaDigitavel(campo);
 	}
 	
@@ -93,8 +225,67 @@ public class CaixaEconomicaFederal {
 	 * @author Filipe Wutzke
 	 */
 	public int calcularDACLinhaDigitavel(String campo) {
-		//TODO escreva o código AQUI
-		return 0;
+		Integer number = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		List<Integer> multiplicacao = new ArrayList<Integer>();
+		int j = 0;
+		int m = 9;
+		int pesso = 1;
+		int total = 0;
+		int totalModuloDivisao = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int retorno = 0;
+
+		for(int i = 0; i < campo.length(); i++) {
+			j = j + 1;
+			number = Integer.parseInt(campo.substring(i,j));
+			codigoBarrasTemp.add(number);
+			number = null;
+		}
+
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			number = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(number);
+			number = null;
+		}
+
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;		
+			pesso += 1;
+
+			totalTemp = codigoBarrasTempModulo11.get(m);
+			total = totalTemp * pesso;
+
+			if(total >= 10) {
+				String tempTotal = String.valueOf(total);
+				String tempPrimeiroNumero = tempTotal.substring(0,1);
+				String tempSegundoNumero = tempTotal.substring(1,2);
+				int tempPrimNumInt = Integer.parseInt(tempPrimeiroNumero);
+				int tempSegNumInt = Integer.parseInt(tempSegundoNumero);
+				int tempFinalTotal = tempPrimNumInt + tempSegNumInt;
+				total = tempFinalTotal;
+
+			}
+			multiplicacao.add(total);
+			totalSoma += total;
+
+			if(pesso == 2){
+				pesso = 0;
+			}
+
+			number = null;
+			total = 0;
+			totalTemp = 0;
+		}
+
+		totalModuloDivisao = totalSoma % 10;
+		retorno = 10 - totalModuloDivisao;
+		totalSoma = 0;
+
+ 		return  retorno;
 	}
 	
 	/**
@@ -122,9 +313,64 @@ public class CaixaEconomicaFederal {
 	 * 
 	 * @author Filipe Wutzke
 	 */
-	public static String calcularDvNossoNumero(String nossoNumero){//Modulo 11
-		//TODO escreva o código AQUI
-		return null;
-	}
 	
+	public static String calcularDvNossoNumero(String nossoNumero){//Modulo 11
+		Integer number = null;
+		List<Integer> codigoBarrasTemp = new ArrayList<Integer>();
+		List<Integer> codigoBarrasTempModulo11 = new ArrayList<Integer>();
+		int j = 0;
+		int m = 17;
+		int pesso1 = 1;
+		int pesso2 = 1;
+		int pesso3 = 1;
+		int total = 0;
+		int totalModuloDivisao = 0;
+		int totalTemp = 0;
+		int totalSoma = 0;
+		int retorno = 0;
+
+		for(int i = 0; i < nossoNumero.length(); i++) {
+			j = j + 1;
+			number = Integer.parseInt(nossoNumero.substring(i,j));
+			codigoBarrasTemp.add(number);
+			number = null;
+		}
+
+		for(Integer i = codigoBarrasTemp.size(); i >= 1; i--){
+			m =  m - 1;
+			number = codigoBarrasTemp.get(m);
+			codigoBarrasTempModulo11.add(number);
+			number = null;
+		}
+
+		for(Integer i = 0; i < codigoBarrasTempModulo11.size(); i++){
+			m = i;
+			if(m >= 0 && m <=8 ) {		
+				pesso1 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso1;
+			}
+			if(m  >= 8 && m <= 16 ) {
+				pesso2 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso2;
+			}
+			if(m >= 16) {
+				pesso3 += 1;
+				totalTemp = codigoBarrasTempModulo11.get(m);
+				total = totalTemp * pesso3;
+			}
+
+			totalSoma += total;
+			number = null;
+			total = 0;
+			totalTemp = 0;
+		}
+
+		totalModuloDivisao = totalSoma % 11;
+		retorno = 11 - totalModuloDivisao;
+		totalSoma = 0;
+
+		return String.valueOf(retorno);
+	}
 }
